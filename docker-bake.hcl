@@ -1,5 +1,5 @@
 variable "REGISTRY" {
-    default = "ghcr.io/odoo-it/docker-odoo"
+    default = "ghcr.io/havmedia/docker-odoo"
 }
 
 variable "VERSION" {
