@@ -47,6 +47,7 @@ RUN --mount=type=bind,src=build/install/${DISTRIBUTION}/apt-build-deps.txt,dst=/
     # Install the build dependencies
     apt-get -qq update \
     && xargs -a /build/apt-build-deps.txt apt-get install -yqq --no-install-recommends \
+    && apt-get install -y gosu \
     # disable gevent version recommendation from odoo and use 21.12.0 instead
     && sed -i -E "s/gevent==21\.8\.0/gevent==21.12.0/" /build/odoo-requirements.txt \
     # Python Packages
