@@ -80,25 +80,18 @@ ENV RESOURCES=/home/odoo/.resources
 ENV ODOO_VERSION=$ODOO_VERSION
 ENV ODOO_RC=/home/odoo/.odoorc
 
-# Add odoo user and directories
-RUN useradd -md /home/odoo -s /bin/false odoo \
-    && mkdir -p $REPOSITORIES \
-    && mkdir -p $DATA_DIR \
-    && mkdir -p $RESOURCES \
-    && chown -R odoo:odoo /home/odoo \
-    && sync
-
 # Entrypoint scripts
 COPY --chmod=777 bin/* /usr/local/bin/
-COPY --chown=odoo.odoo --chmod=777 conf.d $RESOURCES/conf.d
-COPY --chown=odoo.odoo --chmod=777 entrypoint.d $RESOURCES/entrypoint.d
-COPY --chown=odoo.odoo --chmod=777 entrypoint.sh $RESOURCES/entrypoint.sh
+COPY --chmod=777 conf.d $RESOURCES/conf.d
+COPY --chmod=777 entrypoint.d $RESOURCES/entrypoint.d
+COPY --chmod=777 entrypoint.sh $RESOURCES/entrypoint.sh
 
 # Other files
 COPY --chown=odoo.odoo --chmod=777 other/welcome.sh /etc/profile.d/
 
 # Default values for postgres
 ENV PGHOST=db
+ENV PGUSER=odoo
 ENV PGUSER=odoo
 ENV PGPASSWORD=odoo
 
@@ -108,4 +101,4 @@ VOLUME "/home/odoo/data"
 WORKDIR "/home/odoo"
 ENTRYPOINT ["/home/odoo/.resources/entrypoint.sh"]
 CMD ["odoo"]
-USER odoo
+
