@@ -50,3 +50,9 @@ with closing(StringIO()) as resultfp:
     # Write it to destination
     with open(TARGET_FILE, "w+") as targetfp:
         targetfp.write('\n'.join(result))
+
+# Append extra configuration from environment variable
+extra = os.environ.get("ODOO_EXTRA_CONFIG")
+if extra:
+    with open(TARGET_FILE, "a") as targetfp:
+        targetfp.write('\n' + extra + '\n')
